@@ -1,0 +1,3 @@
+#ignore output and configuration files
+./build
+./config
