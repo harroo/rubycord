@@ -1,5 +1,5 @@
 mkdir ./pkg/portable/
-mkdir ./output
+mkdir ./output/
 cp -v ./build/* ./pkg/portable/
 rm ./pkg/portable/rubycord-link
 cd ./pkg/portable/
