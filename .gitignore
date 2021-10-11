@@ -1,3 +1,7 @@
 #ignore output and configuration files
 build
 config
+output
+pkg/portable
+pkg/deb/rubycord_V_amd64/opt
+pkg/deb/rubycord_V_amd64/bin

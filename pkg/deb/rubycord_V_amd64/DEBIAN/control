@@ -1,0 +1,5 @@
+Maintainer: Harroo
+Package: rubycord
+Architecture: amd64
+Version: 1.0
+Description: Simple CLI Discord Client
