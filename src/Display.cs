@@ -7,12 +7,14 @@ namespace Rubycord {
 	public static class Display {
 
 		private static List<string> messageList = new List<string>();
-		private static List<string> senderList = new List<string>();
 
 		public static void Append (string sender, string message) {
 
+			messageList.Add("[" + sender + "]: " + message);
+		}
+		public static void Append (string message) {
+
 			messageList.Add(message);
-			senderList.Add(sender);
 		}
 
 		public static void Tick () {

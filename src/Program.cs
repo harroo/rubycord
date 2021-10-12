@@ -8,10 +8,13 @@ namespace Rubycord {
 		public static void Main (string[] args) {
 
 			Input.Start();
-			//discord.start
-			//discord will take control of evry thing and call the display checks
-			//for now temp:
-			while (true) Display.Tick();
+			Discord.Start();
+			
+			while (Discord.running) {
+
+				Display.Tick();
+			}
+
 			Input.Stop();
 		}
 	}
