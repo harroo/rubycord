@@ -1,6 +1,6 @@
 #ignore output and configuration files
 build
-config
+.rubyconf
 output
 pkg/portable
 pkg/deb/rubycord_V_amd64/opt
