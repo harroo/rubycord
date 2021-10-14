@@ -47,7 +47,7 @@ namespace Rubycord {
 
 				foreach (var channel in guild.Channels) {
 
-					Append(channel.Name);
+					Append(Cache.GetIndex(channel.Id).ToString() + ": " + guild.Name + "::" + channel.Name);
 				}
 			}
 		}

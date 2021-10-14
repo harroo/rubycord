@@ -1,4 +1,6 @@
 
+using System;
+
 namespace Rubycord {
 
 	public static class Command {
@@ -13,7 +15,9 @@ namespace Rubycord {
 
 				case "/list": case "/guilds": case "/ls": Display.ListGuilds(); break;
 
-				default: Display.Append("Rubycord::Command", "Unknown Command! '"+input+"'"); break;
+				case "/switch": case "/channel": case "/mv": Cache.SetChannel(Convert.ToInt32(args[1])); break;
+
+				default: Display.Append("Rubycord::Command", "Unknown Command! '" + input + "'"); break;
 			}
 		}
 	}
