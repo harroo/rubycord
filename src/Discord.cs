@@ -16,9 +16,7 @@ namespace Rubycord {
 			shouldStop = false;
 			running = true;
 
-			Discord.LoopAsync().ConfigureAwait(false);
-
-			running = false;
+			LoopAsync().ConfigureAwait(false);
 		}
 		public static void Stop () {
 
@@ -35,10 +33,12 @@ namespace Rubycord {
 
 			Display.Append("Rubycord", "Configuring...");
 
+			TokenType tokenType = Config.BotUser ? TokenType.Bot : TokenType.User;
+
 			discord = new DiscordClient(new DiscordConfiguration{
 
 					Token = Config.Token,
-					TokenType = Config.BotUser ? TokenType.Bot : TokenType.User,
+					TokenType = tokenType,
 					AutoReconnect = true
 			});
 
@@ -54,6 +54,19 @@ namespace Rubycord {
 			while (!shouldStop) {
 
 				await Task.Delay(512);
+
+				if (Cache.queuedMessages.Count != 0) {
+
+					if (Cache.currentChannel == null) {
+
+						Display.Append("Rubycord", "No channel selected!");
+						Cache.queuedMessages.RemoveAt(0);
+						return;
+					}
+
+					await Cache.currentChannel.SendMessageAsync(Cache.queuedMessages[0]);
+					Cache.queuedMessages.RemoveAt(0);
+				}
 			}
 
 			Display.Append("Rubycord", "Disconnecting from Discord...");
@@ -61,6 +74,8 @@ namespace Rubycord {
 			await discord.DisconnectAsync();
 
 			Display.Append("Rubycord", "Disconnected successfully...");
+
+			running = false;
 		}
 	}
 }

@@ -12,11 +12,13 @@ namespace Rubycord {
 
 		private static string configPath = ".rubyconf";
 
-		public static void LoadConfig () {
+		public static bool LoadConfig () {
 
 			if (!File.Exists(configPath)) {
 
 				File.WriteAllText(configPath, "Token:\nIsBot:true");
+
+				return false;
 				
 			} else {
 
@@ -24,6 +26,8 @@ namespace Rubycord {
 
 				Token = values[0].Split(':')[1];
 				BotUser = values[1].Split(':')[1] == "true";
+
+				return true;
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -19,8 +20,10 @@ namespace Rubycord {
 
 		public static Task OnGuildAvailable (GuildCreateEventArgs e) {
 
-			//Discord.CacheGuild(e.Guild);
-			//change to a cache controller class
+			Display.Append("Rubycord", "Guild detected: " + e.Guild.Name);
+
+			if (!Cache.guilds.Contains(e.Guild))
+				Cache.guilds.Add(e.Guild);
 
 			return Task.CompletedTask;
 		}
@@ -34,7 +37,10 @@ namespace Rubycord {
 
 		public static Task OnMessageCreated (MessageCreateEventArgs e) {
 
-			Display.Append(e.Message.Author.Username, e.Message.Content);
+			if (!Cache.messages.ContainsKey(e.Channel.Id))
+				Cache.messages.Add(e.Channel.Id, new List<string>());
+
+			Cache.messages[e.Channel.Id].Add("["+e.Message.Author.Username+"]: "+e.Message.Content);
 
 			return Task.CompletedTask;
 		}

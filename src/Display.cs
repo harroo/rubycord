@@ -6,15 +6,50 @@ namespace Rubycord {
 
 	public static class Display {
 
-		private static List<string> messageList = new List<string>();
+		private static List<string> defaultList = new List<string>();
+		private static List<string> messageList {
+
+			get {
+				if (Cache.currentChannel == null) return defaultList;	
+				if (Cache.messages.ContainsKey(Cache.currentChannel.Id))
+					return Cache.messages[Cache.currentChannel.Id];
+				else return defaultList;
+			}
+
+			set {
+				defaultList = value;
+				if (Cache.currentChannel != null)
+					if (Cache.messages.ContainsKey(Cache.currentChannel.Id))
+						Cache.messages[Cache.currentChannel.Id] = value; 
+			}
+		}
 
 		public static void Append (string sender, string message) {
 
-			messageList.Add("[" + sender + "]: " + message);
+			defaultList.Add("[" + sender + "]: " + message);
+
+			foreach (var list in Cache.messages.Values) 
+				list.Add("[" + sender + "]: " + message);
 		}
 		public static void Append (string message) {
 
-			messageList.Add(message);
+			defaultList.Add(message);
+
+			foreach (var list in Cache.messages.Values)
+				list.Add(message);
+		}
+
+		public static void ListGuilds () {
+
+			foreach (var guild in Cache.guilds) {
+
+				Append(guild.Name);
+
+				foreach (var channel in guild.Channels) {
+
+					Append(channel.Name);
+				}
+			}
 		}
 
 		public static void Tick () {
@@ -22,15 +57,15 @@ namespace Rubycord {
 			RunChecks();
 		}
 
-		private static List<string> messageListCache = new List<string>();
+		private static int messageListCache;
 		private static int consoleHeightCache, consoleWidthCache;
 		private static string inputCache;
 
 		private static void RunChecks () {
 
-			if (messageListCache != messageList) {
+			if (messageListCache != messageList.Count) {
 
-				messageListCache = messageList;
+				messageListCache = messageList.Count;
 				Render();
 			}
 

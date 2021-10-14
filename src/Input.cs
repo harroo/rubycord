@@ -48,7 +48,11 @@ namespace Rubycord {
 
 		private static void Fire () {
 
-			Display.Append("Local: ", inputValue);
+			if (inputValue.Length == 0) return;
+			
+			if (inputValue[0] == '/') Command.Feed(inputValue);
+			else Cache.queuedMessages.Add(inputValue);
+
 			inputValue = "";
 		}
 
@@ -62,7 +66,9 @@ namespace Rubycord {
 					inputValue = inputValue.Remove(inputValue.Length - 1);
 				else if (cki.Key == ConsoleKey.Enter)
 					Fire();
-				else 
+				else if (cki.Key == ConsoleKey.Escape)
+					Discord.Stop();
+				else
 					inputValue += cki.KeyChar.ToString();
 			}
 		}
