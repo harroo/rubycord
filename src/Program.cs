@@ -1,5 +1,6 @@
 
 using System;
+using System.Threading;
 
 namespace Rubycord {
 
@@ -21,6 +22,8 @@ namespace Rubycord {
 			while (Discord.running) {
 
 				Display.Tick();
+
+				Thread.Sleep(10);
 			}
 
 			Input.Stop();
