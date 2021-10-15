@@ -47,8 +47,12 @@ namespace Rubycord {
 
 				foreach (var channel in guild.Channels) {
 
+					if (channel.Type != DSharpPlus.ChannelType.Text) continue;
+
 					Append(Cache.GetIndex(channel.Id).ToString() + ": " + guild.Name + "::" + channel.Name);
 				}
+
+				foreach (var member in e.Guild
 			}
 		}
 

@@ -17,12 +17,16 @@ namespace Rubycord {
 
 		public static Dictionary<ulong, List<string>> messages = new Dictionary<ulong, List<string>>();
 
+		public static List<DiscordMember> users = new List<DiscordMember>();
+
 		public static void SetChannel (int index) {
 
 			int hunter = 0;
 
 			foreach (var guild in guilds) 
 				foreach (var channel in guild.Channels) {
+
+					if (channel.Type != ChannelType.Text) continue;
 
 					if (hunter == index) {
 
@@ -35,20 +39,38 @@ namespace Rubycord {
 					}
 					hunter++;
 				}
+
+			foreach (var user in users) {
+
+				if (hunter == index) {
+
+					currentChannel = user.CreateDmChannelAsync().Result;
+
+					if (!message.ContainsKey(currentChannel.Id))
+						message.Add(currentChannel.Id, new List<string>());
+
+					return;
+				}
+				hunter++;
+			}
 		}
 
 		public static int GetIndex (ulong channelId) {
 
 			int index = 0;
 
-			foreach(var guild in guilds)
+			foreach (var guild in guilds)
 				foreach (var channel in guild.Channels) {
+
+					if (channel.Type != ChannelType.Text) continue;
 
 					if (channel.Id == channelId)
 						return index;
 					else
 						index++;
 				}
+
+			foreach (var 
 
 			return 0;
 		}
