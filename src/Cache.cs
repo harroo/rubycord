@@ -46,8 +46,8 @@ namespace Rubycord {
 
 					currentChannel = user.CreateDmChannelAsync().Result;
 
-					if (!message.ContainsKey(currentChannel.Id))
-						message.Add(currentChannel.Id, new List<string>());
+					if (!messages.ContainsKey(currentChannel.Id))
+						messages.Add(currentChannel.Id, new List<string>());
 
 					return;
 				}
@@ -70,7 +70,13 @@ namespace Rubycord {
 						index++;
 				}
 
-			foreach (var 
+			foreach (var user in users) {
+
+				if (user.Id == channelId)
+					return index;
+				else 
+					index++;
+			}
 
 			return 0;
 		}

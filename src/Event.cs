@@ -25,6 +25,10 @@ namespace Rubycord {
 			if (!Cache.guilds.Contains(e.Guild))
 				Cache.guilds.Add(e.Guild);
 
+			foreach (var user in e.Guild.GetAllMembersAsync().Result)
+				if (!Cache.users.Contains(user))
+					Cache.users.Add(user);
+
 			return Task.CompletedTask;
 		}
 
