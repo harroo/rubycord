@@ -1,4 +1,5 @@
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Rubycord {
 				Cache.guilds.Add(e.Guild);
 
 			foreach (var user in e.Guild.GetAllMembersAsync().Result)
-				if (!Cache.users.Contains(user))
+				if (Array.Find(Cache.users.ToArray(), c => c.Id == user.Id) == null)
 					Cache.users.Add(user);
 
 			return Task.CompletedTask;
